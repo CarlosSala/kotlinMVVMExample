@@ -1,12 +1,10 @@
-package com.example.examplemvvm.ui.view
+package com.example.examplemvvm.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.Observer
 import com.example.examplemvvm.databinding.ActivityMainBinding
-import com.example.examplemvvm.ui.viewmodel.QuoteViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -24,19 +22,17 @@ class MainActivity : AppCompatActivity() {
 
         quoteViewModel.onCreate()
 
-        // todo lo que esta dentro esta enganchado a livedata y ese ejecutara acá
-        quoteViewModel.quoteModel.observe(this@MainActivity, Observer { currentQuote ->
+        quoteViewModel.quoteModel.observe(this@MainActivity) { currentQuote ->
 
             binding.apply {
-
                 tvQuote.text = currentQuote?.quote ?: "there is not quote"
-                tvAutor.text = currentQuote?.author ?: "there is not author"
+                tvAuthor.text = currentQuote?.author ?: "there is not author"
             }
-        })
+        }
 
-        quoteViewModel.isLoading.observe(this, Observer {
+        quoteViewModel.isLoading.observe(this) {
             binding.pb.isVisible = it
-        })
+        }
 
         binding.clViewContainer.setOnClickListener { quoteViewModel.randomQuote() }
     }

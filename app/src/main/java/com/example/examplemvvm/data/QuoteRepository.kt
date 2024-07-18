@@ -11,8 +11,8 @@ import javax.inject.Inject
 
 class QuoteRepository @Inject constructor(
     private val api: QuoteService,
-    // private val quoteProvider: QuoteProvider,
     private val quoteDao: QuoteDao
+    // private val quoteProvider: QuoteProvider,
 ) {
 
     // dagger hilt
