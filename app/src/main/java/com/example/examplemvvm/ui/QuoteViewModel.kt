@@ -17,11 +17,11 @@ class QuoteViewModel @Inject constructor(
     private val getRandomQuoteUseCase: GetRandomQuoteUseCase
 ) : ViewModel() {
 
-    private val _quoteModel = MutableStateFlow<Quote?>(null)
-    val quoteModel: StateFlow<Quote?> = _quoteModel
+    var _quoteModel = MutableStateFlow<Quote?>(null)
+    var quoteModel: StateFlow<Quote?> = _quoteModel
 
-    private val _isLoading = MutableStateFlow(false)
-    val isLoading: StateFlow<Boolean> = _isLoading
+    private var _isLoading = MutableStateFlow(false)
+    var isLoading: StateFlow<Boolean> = _isLoading
 
     // it is no  necessary with dependency injection
     /*  var getQuoteUseCase = GetQuoteUseCase()
