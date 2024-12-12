@@ -64,7 +64,7 @@ class QuoteViewModelTest {
         }
 
     @Test
-    fun `when randomQuoteUseCase returns a quote set on the livedata`() = runTest {
+    fun `when randomQuoteUseCase returns a quote set on the stateFlow`() = runTest {
 
         // Given
         val quote = Quote("my quote", "carlos")
@@ -83,7 +83,7 @@ class QuoteViewModelTest {
 
         // Given
         val quote = Quote("my quote", "carlos")
-        quoteViewModel.quoteModel.value = quote
+        quoteViewModel._quoteModel.value = quote
         coEvery { getRandomQuoteUseCase() } returns null
 
         // when

@@ -4,8 +4,10 @@ import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
+import androidx.lifecycle.lifecycleScope
 import com.example.examplemvvm.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -22,16 +24,19 @@ class MainActivity : AppCompatActivity() {
 
         quoteViewModel.onCreate()
 
-        quoteViewModel.quoteModel.observe(this@MainActivity) { currentQuote ->
-
-            binding.apply {
-                tvQuote.text = currentQuote?.quote ?: "there is not quote"
-                tvAuthor.text = currentQuote?.author ?: "there is not author"
+        lifecycleScope.launch {
+            quoteViewModel.quoteModel.collect { currentQuote ->
+                binding.apply {
+                    tvQuote.text = currentQuote?.quote ?: "there is not quote"
+                    tvAuthor.text = currentQuote?.author ?: "there is not author"
+                }
             }
         }
 
-        quoteViewModel.isLoading.observe(this) {
-            binding.pb.isVisible = it
+        lifecycleScope.launch {
+            quoteViewModel.isLoading.collect {
+                binding.pb.isVisible = it
+            }
         }
 
         binding.clViewContainer.setOnClickListener { quoteViewModel.randomQuote() }
